@@ -14,7 +14,7 @@ I think about immutable data I think about statelessness. Data goes in
 a function a values comes out. I never thought about a pure function
 holding state. Then I start reading about `Agents` in Elixir and how
 their purpose is to hold and provide access to modifying that state. I
-didn't understand. All the books said that Elixir data was
+didn't understand. All the books said that Elixir's data was
 immutable.
 
 Then I read something about the reason there was no looping
