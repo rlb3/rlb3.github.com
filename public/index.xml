@@ -25,11 +25,11 @@ I think about immutable data I think about statelessness. Data goes in
 a function a values comes out. I never thought about a pure function
 holding state. Then I start reading about &lt;code&gt;Agents&lt;/code&gt; in Elixir and how
 their purpose is to hold and provide access to modifying that state. I
-didn&amp;rsquo;t understand. All the books said that Elixir data was
+didn&amp;rsquo;t understand. All the books said that Elixir&amp;rsquo;s data was
 immutable.&lt;/p&gt;
 
 &lt;p&gt;Then I read something about the reason there was no looping
-constructs in Elixir was because of the immutable state and because of
+constructs in Elixir was because of the immutable data and because of
 that recursion the way to loop. At first I didn&amp;rsquo;t make the connection
 between these ideas but then it hit me. A function that blocks to
 receive data and passes that data back in through a recursive call is
@@ -55,34 +55,28 @@ just blew pass me.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;pre&gt;&lt;code&gt;Erlang/OTP 18 [erts-7.2.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+&lt;pre&gt;&lt;code&gt;iex(1)&amp;gt; pid = Playground.start
 
-Compiled lib/playground.ex
-Interactive Elixir (1.2.3) - press Ctrl+C to exit (type h() ENTER for help)
-iex(1)&amp;gt; pid = Playground.start
 #PID&amp;lt;0.100.0&amp;gt;
+
 iex(2)&amp;gt; send pid, {:inc, self()}
+
 {:inc, #PID&amp;lt;0.98.0&amp;gt;}
+
 iex(3)&amp;gt; flush
+
 0
 :ok
-iex(4)&amp;gt; send pid, {:inc, self()}
-{:inc, #PID&amp;lt;0.98.0&amp;gt;}
-iex(5)&amp;gt; flush
-1
-:ok
-iex(6)&amp;gt; send pid, {:inc, self()}
-{:inc, #PID&amp;lt;0.98.0&amp;gt;}
-iex(7)&amp;gt; flush
-2
-:ok
-iex(8)&amp;gt; send pid, {:inc, self()}
-{:inc, #PID&amp;lt;0.98.0&amp;gt;}
-iex(9)&amp;gt; flush
-3
-:ok
-iex(10)&amp;gt;
 
+iex(4)&amp;gt; send pid, {:inc, self()}
+
+{:inc, #PID&amp;lt;0.98.0&amp;gt;}
+
+iex(5)&amp;gt; flush
+
+1
+
+:ok
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;So that was my epiphany for the weekend. &lt;em&gt;Pure functions can maintain

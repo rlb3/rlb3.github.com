@@ -18,7 +18,7 @@ didn't understand. All the books said that Elixir's data was
 immutable.
 
 Then I read something about the reason there was no looping
-constructs in Elixir was because of the immutable state and because of
+constructs in Elixir was because of the immutable data and because of
 that recursion the way to loop. At first I didn't make the connection
 between these ideas but then it hit me. A function that blocks to
 receive data and passes that data back in through a recursive call is
@@ -47,34 +47,28 @@ end
 {{< /highlight >}}
 
 ```
-Erlang/OTP 18 [erts-7.2.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
-
-Compiled lib/playground.ex
-Interactive Elixir (1.2.3) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)> pid = Playground.start
+
 #PID<0.100.0>
+
 iex(2)> send pid, {:inc, self()}
+
 {:inc, #PID<0.98.0>}
+
 iex(3)> flush
+
 0
 :ok
-iex(4)> send pid, {:inc, self()}
-{:inc, #PID<0.98.0>}
-iex(5)> flush
-1
-:ok
-iex(6)> send pid, {:inc, self()}
-{:inc, #PID<0.98.0>}
-iex(7)> flush
-2
-:ok
-iex(8)> send pid, {:inc, self()}
-{:inc, #PID<0.98.0>}
-iex(9)> flush
-3
-:ok
-iex(10)>
 
+iex(4)> send pid, {:inc, self()}
+
+{:inc, #PID<0.98.0>}
+
+iex(5)> flush
+
+1
+
+:ok
 ```
 
 So that was my epiphany for the weekend. _Pure functions can maintain
