@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Seeking Abstraction</title>
+    <link>http://rlb3.com/post/</link>
+    <description>Recent content in Posts on Seeking Abstraction</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Mar 2016 18:40:21 -0500</lastBuildDate>
+    <atom:link href="http://rlb3.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Recursion</title>
+      <link>http://rlb3.com/post/recursion/</link>
+      <pubDate>Mon, 14 Mar 2016 18:40:21 -0500</pubDate>
+      
+      <guid>http://rlb3.com/post/recursion/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve been studying Elixir recently and i&amp;rsquo;ve really been enjoying
+it. The only other functional programming language I&amp;rsquo;ve used before is
+Clojure. But after today, I understand recursion and state in a way
+that I haven&amp;rsquo;t thought about before.&lt;/p&gt;
+
+&lt;p&gt;When I think of functional languages I about immutable data. And when
+I think about immutable data I think about statelessness. Data goes in
+a function a values comes out. I never thought about a pure function
+holding state. Then I start reading about &lt;code&gt;Agents&lt;/code&gt; in Elixir and how
+their purpose is to hold and provide access to modifying state. I
+didn&amp;rsquo;t understand. All the books said that Elixir data was
+immutable.&lt;/p&gt;
+
+&lt;p&gt;Then I read something about the reason there was no looping
+constructs in Elixir was because of the immutable state and because of
+that recursion the way to loop. At first I didn&amp;rsquo;t make the connection
+between these ideas but then it hit me. A function that blocks to
+receive data and passes that data back in through a recursive call is
+maintaining state. I never thought of this as a use for recursion. I
+used accumulators with recursion but the idea I was maintaining state
+just blew pass me.&lt;/p&gt;
+
+&lt;p&gt;So that was my epiphany for the weekend. &lt;em&gt;Pure functions can maintain
+stage through recursion&lt;/em&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
