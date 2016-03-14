@@ -46,7 +46,7 @@ that I haven&rsquo;t thought about before.</p>
 I think about immutable data I think about statelessness. Data goes in
 a function a values comes out. I never thought about a pure function
 holding state. Then I start reading about <code>Agents</code> in Elixir and how
-their purpose is to hold and provide access to modifying state. I
+their purpose is to hold and provide access to modifying that state. I
 didn&rsquo;t understand. All the books said that Elixir data was
 immutable.</p>
 
@@ -59,8 +59,56 @@ maintaining state. I never thought of this as a use for recursion. I
 used accumulators with recursion but the idea I was maintaining state
 just blew pass me.</p>
 
+<p>As an example of what I&rsquo;m talking about:</p>
+
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span></span><span class="kd">defmodule</span> <span class="nc">Playground</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">counter</span><span class="p">(</span><span class="n">current</span> <span class="p">\\</span> <span class="mi">0</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">receive</span> <span class="k">do</span>
+      <span class="p">{</span><span class="ss">:inc</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">-&gt;</span>
+        <span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="n">current</span>
+        <span class="n">counter</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">start</span> <span class="k">do</span>
+    <span class="n">spawn</span><span class="p">(</span><span class="nc">Playground</span><span class="p">,</span> <span class="ss">:counter</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+
+
+<pre><code>Erlang/OTP 18 [erts-7.2.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Compiled lib/playground.ex
+Interactive Elixir (1.2.3) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)&gt; pid = Playground.start
+#PID&lt;0.100.0&gt;
+iex(2)&gt; send pid, {:inc, self()}
+{:inc, #PID&lt;0.98.0&gt;}
+iex(3)&gt; flush
+0
+:ok
+iex(4)&gt; send pid, {:inc, self()}
+{:inc, #PID&lt;0.98.0&gt;}
+iex(5)&gt; flush
+1
+:ok
+iex(6)&gt; send pid, {:inc, self()}
+{:inc, #PID&lt;0.98.0&gt;}
+iex(7)&gt; flush
+2
+:ok
+iex(8)&gt; send pid, {:inc, self()}
+{:inc, #PID&lt;0.98.0&gt;}
+iex(9)&gt; flush
+3
+:ok
+iex(10)&gt;
+
+</code></pre>
+
 <p>So that was my epiphany for the weekend. <em>Pure functions can maintain
-stage through recursion</em>.</p>
+state through recursion</em>.</p>
 
   </section>
 </article>
@@ -71,11 +119,11 @@ stage through recursion</em>.</p>
 </div>
 
 <footer>
-  <div class="container">
-    <span class="copyright">&copy; 2016  Seeking Abstraction - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
-  </div>
+    <div class="container">
+        <span class="copyright">&copy; 2016  Seeking Abstraction - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons 4.0</a></span>
+    </div>
 </footer>
 
-</body>
-</html>
+    </body>
+    </html>
 

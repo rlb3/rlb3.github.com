@@ -24,7 +24,7 @@ that I haven&amp;rsquo;t thought about before.&lt;/p&gt;
 I think about immutable data I think about statelessness. Data goes in
 a function a values comes out. I never thought about a pure function
 holding state. Then I start reading about &lt;code&gt;Agents&lt;/code&gt; in Elixir and how
-their purpose is to hold and provide access to modifying state. I
+their purpose is to hold and provide access to modifying that state. I
 didn&amp;rsquo;t understand. All the books said that Elixir data was
 immutable.&lt;/p&gt;
 
@@ -37,8 +37,56 @@ maintaining state. I never thought of this as a use for recursion. I
 used accumulators with recursion but the idea I was maintaining state
 just blew pass me.&lt;/p&gt;
 
+&lt;p&gt;As an example of what I&amp;rsquo;m talking about:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-elixir&#34; data-lang=&#34;elixir&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;defmodule&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Playground&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+  &lt;span class=&#34;kd&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;\\&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;receive&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:inc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;send&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+
+  &lt;span class=&#34;kd&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;spawn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;Playground&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;:counter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;pre&gt;&lt;code&gt;Erlang/OTP 18 [erts-7.2.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Compiled lib/playground.ex
+Interactive Elixir (1.2.3) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)&amp;gt; pid = Playground.start
+#PID&amp;lt;0.100.0&amp;gt;
+iex(2)&amp;gt; send pid, {:inc, self()}
+{:inc, #PID&amp;lt;0.98.0&amp;gt;}
+iex(3)&amp;gt; flush
+0
+:ok
+iex(4)&amp;gt; send pid, {:inc, self()}
+{:inc, #PID&amp;lt;0.98.0&amp;gt;}
+iex(5)&amp;gt; flush
+1
+:ok
+iex(6)&amp;gt; send pid, {:inc, self()}
+{:inc, #PID&amp;lt;0.98.0&amp;gt;}
+iex(7)&amp;gt; flush
+2
+:ok
+iex(8)&amp;gt; send pid, {:inc, self()}
+{:inc, #PID&amp;lt;0.98.0&amp;gt;}
+iex(9)&amp;gt; flush
+3
+:ok
+iex(10)&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;p&gt;So that was my epiphany for the weekend. &lt;em&gt;Pure functions can maintain
-stage through recursion&lt;/em&gt;.&lt;/p&gt;
+state through recursion&lt;/em&gt;.&lt;/p&gt;
 </description>
     </item>
     
