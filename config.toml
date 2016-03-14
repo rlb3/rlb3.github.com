@@ -1,5 +1,0 @@
-baseurl = "http://rlb3.com/"
-languageCode = "en-us"
-title = "Seeking Abstraction"
-theme = "base16"
-pygmentsuseclasses = true
