@@ -37,44 +37,44 @@
   </div>
   <h1 class="headline" itemprop="headline">Recursion</h1>
   <section class="body" itemprop="articleBody">
-    <p>I&rsquo;ve been studying Elixir recently and i&rsquo;ve really been enjoying
-it. The only other functional programming language I&rsquo;ve used before is
-Clojure. But after today, I understand recursion and state in a way
-that I haven&rsquo;t thought about before.</p>
+    <p>I&rsquo;ve been studying Elixir recently, and I&rsquo;ve been enjoying it. The
+only other functional programming language I&rsquo;ve used before is
+Clojure. But now I understand recursion and state in a way that I
+haven&rsquo;t thought about before.</p>
 
 <p>When I think of functional languages I about immutable data. And when
-I think about immutable data I think about statelessness. Data goes in
-a function a values comes out. I never thought about a pure function
+I reflect on immutable data I think about statelessness. Data goes in
+a function a value comes out. I never thought about a pure function
 holding state. Then I start reading about <code>Agents</code> in Elixir and how
-their purpose is to hold and provide access to modifying that state. I
-didn&rsquo;t understand. All the books said that Elixir&rsquo;s data was
-immutable.</p>
+their purpose is to hold and modify state. I didn&rsquo;t
+understand. Everything I read said that Elixir&rsquo;s data was immutable.</p>
 
-<p>Then I read something about the reason there was no looping
-constructs in Elixir was because of the immutable data and because of
-that recursion the way to loop. At first I didn&rsquo;t make the connection
-between these ideas but then it hit me. A function that blocks to
-receive data and passes that data back in through a recursive call is
-maintaining state. I never thought of this as a use for recursion. I
-used accumulators with recursion but the idea I was maintaining state
-just blew pass me.</p>
+<p>Then I read there are no looping constructs in Elixir because of the
+immutable data and because of that the only provided way to loop is
+recursion. At first, I didn&rsquo;t make the connection between these ideas,
+but then it hit me. A function that receives data and passes that data
+back in through a recursive call is maintaining state. I never thought
+of this as a use for recursion. I used accumulators with recursion,
+but the idea I was maintaining state just blew past me.</p>
 
-<p>As an example of what I&rsquo;m talking about:</p>
+<p>As an example in Elixir of what I&rsquo;m talking about:</p>
 
-<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span></span><span class="kd">defmodule</span> <span class="nc">Playground</span> <span class="k">do</span>
-  <span class="kd">def</span> <span class="n">counter</span><span class="p">(</span><span class="n">current</span> <span class="p">\\</span> <span class="mi">0</span><span class="p">)</span> <span class="k">do</span>
-    <span class="k">receive</span> <span class="k">do</span>
-      <span class="p">{</span><span class="ss">:inc</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="o">-&gt;</span>
-        <span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="n">current</span>
-        <span class="n">counter</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
 
-  <span class="kd">def</span> <span class="n">start</span> <span class="k">do</span>
-    <span class="n">spawn</span><span class="p">(</span><span class="nc">Playground</span><span class="p">,</span> <span class="ss">:counter</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div>
+
+defmodule Playground do
+  def counter(current \\ 0) do
+    receive do
+      {:inc, pid} ->
+        send pid, current
+        counter(current + 1)
+    end
+  end
+
+  def start do
+    spawn(Playground, :counter, [0])
+  end
+end
+
 
 
 <pre><code>iex(1)&gt; pid = Playground.start
@@ -87,8 +87,7 @@ iex(2)&gt; send pid, {:inc, self()}
 
 iex(3)&gt; flush
 
-0
-:ok
+0 :ok
 
 iex(4)&gt; send pid, {:inc, self()}
 
