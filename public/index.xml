@@ -15,44 +15,44 @@
       <pubDate>Mon, 14 Mar 2016 18:40:21 -0500</pubDate>
       
       <guid>http://rlb3.com/post/recursion/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;ve been studying Elixir recently and i&amp;rsquo;ve really been enjoying
-it. The only other functional programming language I&amp;rsquo;ve used before is
-Clojure. But after today, I understand recursion and state in a way
-that I haven&amp;rsquo;t thought about before.&lt;/p&gt;
+      <description>&lt;p&gt;I&amp;rsquo;ve been studying Elixir recently, and I&amp;rsquo;ve been enjoying it. The
+only other functional programming language I&amp;rsquo;ve used before is
+Clojure. But now I understand recursion and state in a way that I
+haven&amp;rsquo;t thought about before.&lt;/p&gt;
 
 &lt;p&gt;When I think of functional languages I about immutable data. And when
-I think about immutable data I think about statelessness. Data goes in
-a function a values comes out. I never thought about a pure function
+I reflect on immutable data I think about statelessness. Data goes in
+a function a value comes out. I never thought about a pure function
 holding state. Then I start reading about &lt;code&gt;Agents&lt;/code&gt; in Elixir and how
-their purpose is to hold and provide access to modifying that state. I
-didn&amp;rsquo;t understand. All the books said that Elixir&amp;rsquo;s data was
-immutable.&lt;/p&gt;
+their purpose is to hold and modify state. I didn&amp;rsquo;t
+understand. Everything I read said that Elixir&amp;rsquo;s data was immutable.&lt;/p&gt;
 
-&lt;p&gt;Then I read something about the reason there was no looping
-constructs in Elixir was because of the immutable data and because of
-that recursion the way to loop. At first I didn&amp;rsquo;t make the connection
-between these ideas but then it hit me. A function that blocks to
-receive data and passes that data back in through a recursive call is
-maintaining state. I never thought of this as a use for recursion. I
-used accumulators with recursion but the idea I was maintaining state
-just blew pass me.&lt;/p&gt;
+&lt;p&gt;Then I read there are no looping constructs in Elixir because of the
+immutable data and because of that the only provided way to loop is
+recursion. At first, I didn&amp;rsquo;t make the connection between these ideas,
+but then it hit me. A function that receives data and passes that data
+back in through a recursive call is maintaining state. I never thought
+of this as a use for recursion. I used accumulators with recursion,
+but the idea I was maintaining state just blew past me.&lt;/p&gt;
 
-&lt;p&gt;As an example of what I&amp;rsquo;m talking about:&lt;/p&gt;
+&lt;p&gt;As an example in Elixir of what I&amp;rsquo;m talking about:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-elixir&#34; data-lang=&#34;elixir&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;defmodule&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Playground&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-  &lt;span class=&#34;kd&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;\\&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;receive&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-      &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:inc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;send&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;counter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
 
-  &lt;span class=&#34;kd&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;start&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;spawn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;Playground&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;:counter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
-  &lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+defmodule Playground do
+  def counter(current \\ 0) do
+    receive do
+      {:inc, pid} -&gt;
+        send pid, current
+        counter(current + 1)
+    end
+  end
+
+  def start do
+    spawn(Playground, :counter, [0])
+  end
+end
+
 
 
 &lt;pre&gt;&lt;code&gt;iex(1)&amp;gt; pid = Playground.start
@@ -65,8 +65,7 @@ iex(2)&amp;gt; send pid, {:inc, self()}
 
 iex(3)&amp;gt; flush
 
-0
-:ok
+0 :ok
 
 iex(4)&amp;gt; send pid, {:inc, self()}
 
