@@ -15,11 +15,7 @@
       <pubDate>Tue, 03 Jan 2017 11:42:38 -0600</pubDate>
       
       <guid>http://rlb3.com/post/elm/</guid>
-      <description>&lt;p&gt;Title: Elm
-Author: Robert Boone
-Base Header Level: 1&lt;/p&gt;
-
-&lt;p&gt;This year I started to get into functional programming languages. I started the year with Elixir and ended starting to learn Haskell. Between those I learned Elm and really like it. Elm is a ML family language built in Haskell. I use to think about Elm as Haskell lite but with the many changes to simplify the language I now think of it more as it’s own language. The stand out features of Elm are:&lt;/p&gt;
+      <description>&lt;p&gt;This year I started to get into functional programming languages. I started the year with Elixir and ended starting to learn Haskell. Between those I learned Elm and really like it. Elm is a ML family language built in Haskell. I use to think about Elm as Haskell lite but with the many changes to simplify the language I now think of it more as it’s own language. The stand out features of Elm are:&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Pure functions&lt;/li&gt;
@@ -60,8 +56,10 @@ Base Header Level: 1&lt;/p&gt;
 
 &lt;p&gt;This produces a data structure that looks like this:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-elm&#34; data-lang=&#34;elm&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;leaf&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;home&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;Random&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Generate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Generator&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-    &lt;span class=&#34;nf&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Platform&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Cmd&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Cmd&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Repl&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Msg&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-elm&#34; data-lang=&#34;elm&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;leaf&amp;quot;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;home&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;Random&amp;quot;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Generate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Generator&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Platform&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Cmd&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Cmd&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Repl&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Msg&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
