@@ -2,12 +2,90 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Seeking Abstraction</title>
-    <link>http://rlb3.com/</link>
+    <link>http://rlb3.com/index.xml</link>
     <description>Recent content on Seeking Abstraction</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Mar 2016 18:40:21 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jan 2017 11:42:38 -0600</lastBuildDate>
     <atom:link href="http://rlb3.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>elm</title>
+      <link>http://rlb3.com/post/elm/</link>
+      <pubDate>Tue, 03 Jan 2017 11:42:38 -0600</pubDate>
+      
+      <guid>http://rlb3.com/post/elm/</guid>
+      <description>&lt;p&gt;This year I started to get into functional programming languages. I started the year with Elixir and ended starting to learn Haskell. Between those, I learned Elm and really like it. Elm is an ML-family language built in Haskell. I use to think about Elm as Haskell lite but with the many changes to simplify the language I now think of it more as it’s own language. The stand out features of Elm are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Pure functions&lt;/li&gt;
+&lt;li&gt;Managed Effects&lt;/li&gt;
+&lt;li&gt;Great error messages&lt;/li&gt;
+&lt;li&gt;The Elm architecture&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In imperative languages when you execute a function anything can happen. For example:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;create_user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;“&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;Dave&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;”&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now this function seems to be dependent on it arguments but it doesn’t have to be.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;It can create and return the user.&lt;/li&gt;
+&lt;li&gt;It can create and save the user to a database.&lt;/li&gt;
+&lt;li&gt;It can create the user and print out a success message.&lt;/li&gt;
+&lt;li&gt;It can create the user and log.&lt;/li&gt;
+&lt;li&gt;It can throw an exception.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;All the extra thing that this function can do are called side-effects. Side effects are useful, even critical, to your program but they can make reasoning about you program harder. Elm’s function are pure. Meaning that the result of the function is dependent on the arguments that go in. You can think of a pure function as acting like a lookup table. What every argument that goes in always returns the corresponding value.&lt;/p&gt;
+
+&lt;p&gt;But what about those side effect that are needed? Elm has managed effects. In an imperative language if I need a random number I would just do this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rand_number&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;rand&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Simple, but every time I run this function I would get a different result. This violates purity. For random numbers in Elm you do this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-elm&#34; data-lang=&#34;elm&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Random&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;generate&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;RandNum&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Random&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This produces a data structure that looks like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-elm&#34; data-lang=&#34;elm&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;leaf&amp;quot;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;home&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;Random&amp;quot;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Generate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Generator&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Platform&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Cmd&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Cmd&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;Repl&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;Msg&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So when I run the &lt;code&gt;Random.generate&lt;/code&gt; function I don’t get back the random number it produces a data structure that describes what I want. This description is passed to the Elm runtime. The runtime provides me with the random number. Seems complicated just for a random number generator. Let me tell you a story of why managed effects are useful.&lt;/p&gt;
+
+&lt;p&gt;In the spring of 2015, I was working on a largish rails project. The planned features called for a lot of JavaScript. I was looking for a framework to use but I didn&amp;rsquo;t see anything I liked so I decided to do the work in jQuery. After a rough start, the project seemed to be going well. In most jQuery applications state is stored in the DOM. This would come back to haunt me.&lt;/p&gt;
+
+&lt;p&gt;Behavior and State became the two problem areas. When adding a new behavior the balance between the current behaviors and the new behavior was held together by the state. It became a game of whack-a-mole trying to add and fix behavior all the while mutating the state in the DOM. I made integration tests for every bug that came in but I never felt comfortable making changes to that code.&lt;/p&gt;
+
+&lt;p&gt;Towards the end of last year, I started studying at Elm. Because of its immutable nature state change was handled by the elm runtime. The Elm architecture pattern for state change is what I need on that project.&lt;/p&gt;
+
+&lt;p&gt;The Elm architecture has three parts.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Model&lt;/li&gt;
+&lt;li&gt;View&lt;/li&gt;
+&lt;li&gt;Update function&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;When the web app is loaded there is an initial model. This model is used to build the view. The HTML that is generated from the view can cause commands to fired into the Elm runtime. The Elm runtime passes these commands and the current model to the update function. The update function will generate a new model and the cycle starts again. And that&amp;rsquo;s it.&lt;/p&gt;
+
+&lt;p&gt;This method of state change is much more predictable and easier to reason about. This would have made that previous project much more manageable. Elm, to me, is all about simplifying web app creation. With its strict typing and outstanding error messages complicated web interface interactions become something reasonable for a small team to handle.&lt;/p&gt;
+
+&lt;p&gt;Elm has been an eye-opening experience for me. Learning Elm has informed how I code in other languages. I hope others will try Elm and have a similar experience to what I day.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Recursion</title>
