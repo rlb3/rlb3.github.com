@@ -4,7 +4,7 @@ title = "elm"
 
 +++
 
-This year I started to get into functional programming languages. I started the year with Elixir and ended starting to learn Haskell. Between those, I learned Elm and really like it. Elm is an ML-family language built in Haskell. I use to think about Elm as Haskell lite but with the many changes to simplify the language I now think of it more as it’s own language. The stand out features of Elm are:
+Last year I started to get into functional programming languages. I started the year with Elixir and ended starting to learn Haskell. Between those, I learned Elm and really like it. Elm is an ML-family language built in Haskell. I use to think about Elm as Haskell lite but with the many changes to simplify the language I now think of it more as it’s own language. The stand out features of Elm are:
 
 1. Pure functions
 2. Managed Effects
